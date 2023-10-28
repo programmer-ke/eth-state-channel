@@ -86,8 +86,8 @@ We'll need another active address to act as the rube in our app. To do this just
 
 ### 🥅 Goals:
 
-- [ ] Does your original frontend address recieve the `Hello Guru` UI?
-- [ ] Does your alternate addresses recieve the `Hello Rube` UI?
+- [x] Does your original frontend address recieve the `Hello Guru` UI?
+- [x] Does your alternate addresses recieve the `Hello Rube` UI?
 
 ---
 
@@ -111,9 +111,9 @@ Rubes seeking wisdom will use a **payable** `fundChannel()` function, which will
 
 ### 🥅 Goals:
 
-- [ ] Does opening a channel cause a `Received Wisdom` box to appear?
-- [ ] Do opened channels appear on the Guru's UI as well?
-- [ ] Using the _Debug Contracts_ tab, does a repeated call to `fundChannel` fail?
+- [x] Does opening a channel cause a `Received Wisdom` box to appear?
+- [x] Do opened channels appear on the Guru's UI as well?
+- [x] Using the _Debug Contracts_ tab, does a repeated call to `fundChannel` fail?
 
 ---
 

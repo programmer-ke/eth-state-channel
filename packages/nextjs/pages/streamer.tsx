@@ -110,6 +110,7 @@ const Streamer: NextPage = () => {
     /**
      * Handle incoming payments from the given client.
      */
+      console.log("creating processor for: ", clientAddress);
     async function processVoucher({ data }: { data: Pick<Voucher, "signature"> & { updatedBalance: string } }) {
       // recreate a bigint object from the message. v.data.updatedBalance is
       // a string representation of the bigint for transit over the network
@@ -127,6 +128,32 @@ const Streamer: NextPage = () => {
        *  and then use verifyMessage() to confirm that voucher signer was
        *  `clientAddress`. (If it wasn't, log some error message and return).
        */
+	const balanceByteArray = toBytes(
+	    keccak256(
+		encodePacked(
+		    ["uint256"],
+		    [updatedBalance]
+		)
+	    )
+	);
+
+	const receivedSignature = data.signature;
+	console.log("**incoming data**", data);
+	console.log("** received signature **", receivedSignature);
+
+	const valid = await verifyMessage({
+	    address: clientAddress,
+	    message: { raw: balanceByteArray },
+	    signature: receivedSignature
+	});
+
+	if (!valid) {
+	    console.log("Invalid signature!");
+	    return;
+	} else {
+	    console.log("Signature is valid");
+	}
+
       const existingVoucher = vouchers[clientAddress];
 
       // update our stored voucher if this new one is more valuable
