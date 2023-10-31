@@ -61,6 +61,8 @@ contract Streamer is Ownable {
           - calculate the payment when reducing balances[signer] to v.updatedBalance
           - adjust the channel balance, and pay the Guru(Contract owner). Get the owner address with the `owner()` function.
           - emit the Withdrawn event
+
+	  todo: https://solidity-by-example.org/signature/
     */
   }
 

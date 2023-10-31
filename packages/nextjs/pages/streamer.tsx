@@ -138,8 +138,6 @@ const Streamer: NextPage = () => {
 	);
 
 	const receivedSignature = data.signature;
-	console.log("**incoming data**", data);
-	console.log("** received signature **", receivedSignature);
 
 	const valid = await verifyMessage({
 	    address: clientAddress,
@@ -160,6 +158,7 @@ const Streamer: NextPage = () => {
       if (existingVoucher === undefined || updatedBalance < existingVoucher.updatedBalance) {
         setVouchers(vouchers => ({ ...vouchers, [clientAddress]: { ...data, updatedBalance } }));
       }
+	console.log(vouchers);
     }
 
     return processVoucher;
@@ -226,6 +225,24 @@ const Streamer: NextPage = () => {
   }, [userAddress]);
 
   const provideService = (client: AddressType, wisdom: string) => {
+      // if client lags in payments, stop providing service
+      const beginningBalance = parseEther(STREAM_ETH_VALUE);
+      const paymentDue = BigInt(wisdom.length) * parseEther(ETH_PER_CHARACTER);
+      const expectedBalance = beginningBalance - paymentDue;
+
+      const allowableCharacterDelay = 5n;
+      
+      const latestVoucherBalance = vouchers[client]?.updatedBalance || parseEther(STREAM_ETH_VALUE);
+      if (
+	  (latestVoucherBalance - expectedBalance) >
+	      (allowableCharacterDelay * parseEther(ETH_PER_CHARACTER))
+      ) {
+	  console.log(expectedBalance, latestVoucherBalance);
+	  console.log("client is behind on payments");
+	  return;
+      }
+      
+      
     setWisdoms({ ...wisdoms, [client]: wisdom });
     channels[client]?.postMessage(wisdom);
   };
