@@ -64,6 +64,20 @@ contract Streamer is Ownable {
 
 	  todo: https://solidity-by-example.org/signature/
     */
+    address signer = recoverSigner(prefixedHashed, voucher.sig);
+    require(balances[signer] > voucher.updatedBalance, "Streamer: withdrawEarnings - signer has unsufficient balance");
+
+    uint256 paymentDue = balances[signer] - voucher.updatedBalance;
+    balances[signer] = voucher.updatedBalance;
+
+    (bool sent,) = owner().call{value: paymentDue}("");
+    require(sent, "Streamer: withdrawEarnings - unable to send payment due to owner");
+
+    emit Withdrawn(signer, paymentDue);
+  }
+
+  function recoverSigner(bytes32 messageHash, Signature calldata signature) public pure returns (address) {
+    return ecrecover(messageHash, signature.v, signature.r, signature.s);
   }
 
   /*
