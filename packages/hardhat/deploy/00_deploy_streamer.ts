@@ -38,7 +38,7 @@ const deployStreamer: DeployFunction = async function (hre: HardhatRuntimeEnviro
 
     // Transfer ownership to your front end address
     console.log("\n 🤹  Sending ownership to frontend address...\n");
-    const ownerTx = await streamer.transferOwnership("0x779F8e8f03Eb96cB93433Df0298A22570d8fe987");
+    const ownerTx = await streamer.transferOwnership("0x89cBbECd843f694727AF485a7669279d50fD4044");
     console.log("\n       confirming...\n");
     const ownershipResult = await ownerTx.wait();
     if (ownershipResult) {

@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         Streamer: {
-          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
           abi: [
             {
               anonymous: false,
@@ -92,6 +92,20 @@ const contracts = {
             },
             {
               inputs: [],
+              name: "challengeChannel",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "defundChannel",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
               name: "fundChannel",
               outputs: [],
               stateMutability: "payable",
@@ -108,6 +122,47 @@ const contracts = {
                 },
               ],
               stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "messageHash",
+                  type: "bytes32",
+                },
+                {
+                  components: [
+                    {
+                      internalType: "bytes32",
+                      name: "r",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "bytes32",
+                      name: "s",
+                      type: "bytes32",
+                    },
+                    {
+                      internalType: "uint8",
+                      name: "v",
+                      type: "uint8",
+                    },
+                  ],
+                  internalType: "struct Streamer.Signature",
+                  name: "signature",
+                  type: "tuple",
+                },
+              ],
+              name: "recoverSigner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "pure",
               type: "function",
             },
             {
